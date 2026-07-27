@@ -1,0 +1,35 @@
+# Environment / secrets
+.env
+.env.*
+!.env.example
+
+# Virtual environment
+.venv/
+venv/
+
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Streamlit secrets
+.streamlit/secrets.toml
+
+# Databases
+*.db
+*.sqlite
+*.sqlite3
+
+# Test / coverage
+.coverage
+htmlcov/
+
+# OS / editor
+.DS_Store
+Thumbs.db
+
+# Local datasets / outputs
+data/
+outputs/
