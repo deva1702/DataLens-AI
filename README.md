@@ -1,4 +1,4 @@
-# 📊 DataLens AI
+<h1 align="center">📊 DataLens AI</h1>
 
 DataLens AI is a dataset-agnostic conversational analytics agent that allows users to upload CSV or Excel files and ask analytical questions in plain English.
 
@@ -137,6 +137,14 @@ The Insight Generator is explicitly instructed not to invent numbers, units, cur
 
 ---
 
+## Prerequisites
+
+- Python 3.12.10
+- Git
+- A Groq API key
+
+---
+
 # 🚀 Installation
 
 ## 1. Clone the Repository
@@ -216,6 +224,20 @@ Then:
 4. Click **Analyze**.
 5. Review the answer and supporting data.
 6. Expand **View generated SQL** to inspect the computation.
+
+---
+
+## ⚡ Quick Demo
+
+After completing the installation and starting DataLens:
+
+1. Upload `sample_data/employee_sample.csv`.
+2. Ask:
+   `Which employee has the highest salary?`
+3. Expected answer: **Ananya Rao — 95,000**
+4. Review the supporting data and generated SQL displayed by DataLens.
+
+This bundled dataset allows the agent to be tested immediately without downloading any external data.
 
 ---
 
