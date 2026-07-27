@@ -3,3 +3,4 @@ pandas
 openpyxl
 groq
 python-dotenv
+pytest==9.1.1
