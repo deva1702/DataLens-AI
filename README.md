@@ -4,6 +4,7 @@ DataLens AI is a dataset-agnostic conversational analytics agent that allows use
 
 The system converts natural-language questions into SQL, validates the generated query, executes it against an in-memory SQLite database, and generates a concise explanation using only the verified database result.
 
+> **Category:** CATEGORY 2 — Data & Documents  
 > **Selected Challenge:** CSV / Data Q&A Agent (Advanced)
 
 ## 🎯 Agent Goal
