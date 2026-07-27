@@ -98,22 +98,18 @@ class SQLValidator:
                 "Only SELECT queries are allowed."
             )
 
-        # Remove quoted string values before keyword checks.
-        # Example:
-        # WHERE action = 'DELETE'
-        # should remain a valid read-only query.
-        query_without_strings = re.sub(
+        # Remove single-quoted string literals before security
+        # checks. This avoids false positives when ordinary
+        # dataset values contain words such as DELETE or
+        # sqlite_master.
+        #
+        # Double-quoted identifiers are intentionally preserved
+        # because SQLite permits quoted object names such as
+        # "sqlite_master".
+        query_for_security_check = re.sub(
             r"'(?:''|[^'])*'",
             "''",
             cleaned_query,
-        )
-
-        # Also remove double-quoted values/identifiers from
-        # dangerous-keyword inspection.
-        query_for_security_check = re.sub(
-            r'"(?:""|[^"])*"',
-            '""',
-            query_without_strings,
         )
 
         # Block dangerous SQL operations.
@@ -127,7 +123,8 @@ class SQLValidator:
                     f"Forbidden SQL operation detected: {keyword}."
                 )
 
-        # Prevent access to SQLite internal metadata tables.
+        # Prevent access to SQLite internal metadata objects.
+        # Double-quoted identifiers remain visible here.
         for object_name in cls.FORBIDDEN_OBJECTS:
             if re.search(
                 rf"\b{re.escape(object_name)}\b",
@@ -139,21 +136,56 @@ class SQLValidator:
                     "is not allowed."
                 )
 
-        # Restrict queries to the application's dataset table.
-        table_references = re.findall(
-            r"\b(?:FROM|JOIN)\s+([A-Za-z_][A-Za-z0-9_]*)",
+        # Block SQLite PRAGMA table-valued functions such as
+        # pragma_table_info(...).
+        if re.search(
+            r"\bpragma_[A-Za-z0-9_]*\s*\(",
             query_for_security_check,
             flags=re.IGNORECASE,
+        ):
+            raise SQLValidationError(
+                "Access to internal database metadata "
+                "is not allowed."
+            )
+
+        # Detect tables referenced directly after FROM or JOIN.
+        #
+        # Commas are deliberately NOT treated as table-reference
+        # markers because commas also occur normally in SELECT
+        # column lists such as:
+        #
+        # SELECT employee_name, salary FROM dataset
+        #
+        # SQLite metadata objects in comma joins are already
+        # rejected by the metadata checks above.
+        table_references = re.findall(
+            r"""
+            (?:\bFROM\b|\bJOIN\b)
+            \s*
+            (?:
+                "([^"]+)"
+                |
+                ([A-Za-z_][A-Za-z0-9_]*)
+            )
+            """,
+            query_for_security_check,
+            flags=re.IGNORECASE | re.VERBOSE,
         )
 
-        for table_name in table_references:
+        normalized_tables = [
+            quoted or unquoted
+            for quoted, unquoted in table_references
+        ]
+
+        # Every directly referenced table must be dataset.
+        for table_name in normalized_tables:
             if table_name.lower() != "dataset":
                 raise SQLValidationError(
                     "Queries may only access the uploaded dataset."
                 )
 
-        # Require the query to actually access the dataset.
-        if not table_references:
+        # Require the query to access the uploaded dataset.
+        if not normalized_tables:
             raise SQLValidationError(
                 "Query must access the uploaded dataset."
             )
