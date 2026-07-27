@@ -399,7 +399,7 @@ This second dataset was deliberately different from the bundled employee dataset
 
 The same DataLens pipeline was used for both the employee and FMCG datasets without changing the application code for either schema.
 
-📸 **[View screenshots of these results](#screenshots)**
+📸 **[View screenshots of these results](./screenshots/)**
 
 ---
 
