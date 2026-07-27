@@ -1,7 +1,7 @@
 <h1 align="center">📊 DataLens AI</h1>
 
-> **Category:** CATEGORY 2 — Data & Documents  
-> **Selected Challenge:** CSV / Data Q&A Agent (Advanced)
+> **Category: CATEGORY 2 — Data & Documents**  
+> **Selected Challenge: CSV / Data Q&A Agent (Advanced)**
 
 DataLens AI is a dataset-agnostic conversational analytics agent that allows users to upload CSV or Excel files and ask analytical questions in plain English.
 
