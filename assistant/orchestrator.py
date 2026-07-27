@@ -1,21 +1,9 @@
 import pandas as pd
 
-from assistant.insight_generator import (
-    InsightGenerator,
-    InsightGenerationError,
-)
-from assistant.sql_generator import (
-    SQLGenerator,
-    SQLGenerationError,
-)
-from database.database_manager import (
-    DatabaseManager,
-    DatabaseError,
-)
-from guardrails.sql_validator import (
-    SQLValidator,
-    SQLValidationError,
-)
+from assistant.insight_generator import (InsightGenerator,InsightGenerationError,)
+from assistant.sql_generator import (SQLGenerator,SQLGenerationError,)
+from database.database_manager import (DatabaseManager,DatabaseError,)
+from guardrails.sql_validator import (SQLValidator,SQLValidationError,)
 from preprocessing.dataset_profiler import DatasetProfiler
 
 
@@ -115,10 +103,14 @@ class AnalyticsAssistant:
                 validated_sql
             )
 
-            # Step 5: Explain only the database result.
+            # Step 5: Explain only the verified database result.
+            # The validated SQL is supplied only as context so
+            # the explanation model understands ranking,
+            # filtering, grouping, and aggregation operations.
             insight = self.insight_generator.generate(
                 question=question,
                 result=result,
+                sql=validated_sql,
             )
 
             return AnalyticsResult(

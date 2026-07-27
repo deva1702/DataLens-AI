@@ -45,7 +45,6 @@ class DataLoader:
         cls._validate_file_size(file)
 
         try:
-
             if extension == ".csv":
                 dataframe = pd.read_csv(file)
 
@@ -69,14 +68,34 @@ class DataLoader:
         cls,
         file: BinaryIO,
     ) -> None:
-        """Reject files larger than the configured limit."""
+        """
+        Reject files larger than the configured limit.
 
-        if not hasattr(file, "size"):
+        Uses standard seek/tell operations instead of relying
+        on framework-specific attributes such as file.size.
+        """
+
+        try:
+            current_position = file.tell()
+
+            file.seek(0, 2)
+            size_bytes = file.tell()
+
+            file.seek(current_position)
+
+        except (AttributeError, OSError):
+            # Some file-like objects may not support seeking.
+            # The application layer performs its own upload-size
+            # validation before calling the loader.
             return
 
-        size_mb = file.size / (1024 * 1024)
+        max_size_bytes = (
+            cls.MAX_FILE_SIZE_MB
+            * 1024
+            * 1024
+        )
 
-        if size_mb > cls.MAX_FILE_SIZE_MB:
+        if size_bytes > max_size_bytes:
             raise DataLoaderError(
                 f"File is too large. Maximum size is "
                 f"{cls.MAX_FILE_SIZE_MB} MB."
@@ -123,6 +142,18 @@ class DataLoader:
             )
             .str.strip("_")
         )
+
+        # Reject headers that become empty after normalization.
+        #
+        # Examples:
+        # ### -> ""
+        # !!! -> ""
+        if (cleaned_columns == "").any():
+            raise DataLoaderError(
+                "One or more column names are invalid. "
+                "Column names must contain letters, "
+                "numbers, or underscores."
+            )
 
         if cleaned_columns.duplicated().any():
             raise DataLoaderError(

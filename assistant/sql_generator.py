@@ -172,8 +172,13 @@ or MAX, give the computed column a clear descriptive alias.
             sql = response.choices[0].message.content
 
         except Exception as exc:
+            print(
+                "SQL generation failure:",
+                type(exc).__name__,
+                getattr(exc, "status_code", None),
+            )
             raise SQLGenerationError(
-                f"Failed to generate SQL: {exc}"
+                "The SQL generation service could not complete the request."
             ) from exc
 
         if not sql:
