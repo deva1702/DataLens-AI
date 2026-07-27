@@ -1,0 +1,21 @@
+employee_id,employee_name,department,region,salary,experience_years,performance_score,joining_date
+101,Ananya Rao,Engineering,South,95000,7,4.9,2019-06-10
+102,Arjun Mehta,Engineering,North,82000,5,4.5,2021-02-15
+103,Meera Nair,HR,South,65000,6,4.6,2020-08-03
+104,Rohan Shah,Sales,West,72000,4,4.4,2022-01-20
+105,Kavya Iyer,Engineering,West,88000,6,4.7,2020-11-12
+106,Vikram Singh,Sales,North,70000,5,4.2,2021-07-05
+107,Priya Das,HR,East,62000,3,4.3,2023-03-18
+108,Aditya Kulkarni,Finance,West,78000,5,4.5,2021-09-27
+109,Neha Kapoor,Finance,North,81000,6,4.6,2020-04-14
+110,Rahul Verma,Sales,South,68000,3,4.1,2023-06-22
+111,Sneha Patil,Engineering,East,76000,4,4.4,2022-05-09
+112,Karan Malhotra,Finance,South,85000,7,4.8,2019-12-02
+113,Ishita Bose,HR,North,67000,4,4.5,2022-10-17
+114,Nikhil Jain,Sales,East,74000,5,4.6,2021-11-08
+115,Pooja Menon,Engineering,South,90000,8,4.8,2018-07-23
+116,Siddharth Roy,Finance,East,73000,3,4.2,2023-09-11
+117,Aisha Khan,HR,West,69000,5,4.7,2021-01-25
+118,Dev Patel,Sales,West,71000,4,4.3,2022-04-04
+119,Riya Sen,Engineering,North,84000,5,4.6,2021-08-30
+120,Manish Gupta,Finance,North,79000,4,4.4,2022-12-19
