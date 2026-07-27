@@ -380,6 +380,7 @@ The Kaggle dataset contains multiple files. For the DataLens AI evaluation, only
 
 ```text
 FMCG_2022_2024.csv
+```
 
 The DataLens test file contained **190,757 records**.
 
