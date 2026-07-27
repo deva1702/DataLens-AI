@@ -549,6 +549,30 @@ Application-level findings under DataLens's control were addressed through SQL v
 
 ---
 
+## 🧪 Automated Tests
+
+DataLens includes automated regression and security tests for the SQL validation layer.
+
+The tests cover:
+
+- Valid read-only dataset queries
+- Quoted dataset identifiers
+- SQLite metadata access attempts
+- PRAGMA table-valued functions
+- Destructive SQL operations
+- Multiple SQL statements
+- SQL comments
+- Empty queries
+- Queries that do not access the uploaded dataset
+
+Run the automated test suite from the project root:
+
+```bash
+pytest -v
+```
+
+---
+
 # ⚖️ Design Decisions and Trade-offs
 
 ## 1. SQLite Instead of LLM-Only Analytics
