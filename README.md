@@ -244,6 +244,12 @@ This bundled dataset allows the agent to be tested immediately without downloadi
 
 ---
 
+## Evaluation Summary
+
+DataLens AI was evaluated using **12 functional analytical questions across two unrelated datasets**: 6 reproducible questions using the bundled employee dataset and 6 questions using the larger FMCG dataset. This exceeds the challenge requirement of 8–10 sample questions and demonstrates that the same analytics pipeline can operate across different schemas without dataset-specific application code.
+
+---
+
 # 📁 Sample Dataset
 
 A small reproducible employee dataset is included with the repository:
